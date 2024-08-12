@@ -1,6 +1,4 @@
 import random
-import matplotlib.pyplot as plt
-
 
 def generarPeso(estatura):
     if estatura > 1:
@@ -21,32 +19,23 @@ for i in range(n):
 estaturas = [x[0] for x in datos]
 pesos = [x[1] for x in datos]
 
+print(datos)
 
-sumXY = 0
-for i in range(n):
-    sumXY += estaturas[i] * pesos[i]
+errorMenor = 1000
+for a in range(-100, 101):
+    for b in range(-100, 101):
+        
+        errorTotal = 0
+        for i in range(len(estaturas)):
+            Y = a * estaturas[i] + b
+            errorAbs = abs(pesos[i] - Y)
+            errorTotal += errorAbs
 
-sumX = sum(estaturas)
-sumY = sum(pesos)
-sumX2 = sum([x**2 for x in estaturas])
+        if errorTotal < errorMenor:
+            errorMenor = errorTotal
+            mejorA = a
+            mejorB = b
 
-a = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX**2)
-b = (sumY - a * sumX) / n
-
-print('a =', a)
-print('b =', b)
-
-
-pesoIdeal = [a * x + b for x in estaturas]
-
-plt.plot(estaturas, pesoIdeal, color='red', label='Línea de regresión')
-
-formula = 'Regresion Lineal: ' f'y = {a:.2f}x + {b:.2f}'
-plt.text(min(estaturas), max(pesos), formula, fontsize=12, color='red')
-
-plt.scatter(estaturas, pesos, color='blue')
-plt.title('Estatura vs Peso')
-plt.xlabel('Estatura (m)')
-plt.ylabel('Peso (kg)')
-plt.grid(True)
-plt.show()
+print(f"El menor error absoluto total es: {errorMenor}")
+print(f"Mejor valor de a: {mejorA}")
+print(f"Mejor valor de b: {mejorB}")
