@@ -22,8 +22,8 @@ pesos = [x[1] for x in datos]
 print(datos)
 
 errorMenor = 1000
-for a in range(-100, 101):
-    for b in range(-100, 101):
+for a in range(-100000, 100001):
+    for b in range(-100000, 1000001):
         
         errorTotal = 0
         for i in range(len(estaturas)):
